@@ -1,25 +1,8 @@
 const express = require('express');
-const ejs = require("ejs");
 const path = require('path');
 const bodyParser = require('body-parser');
-const moment = require('moment-timezone');
-const csvWriter = require('csv-writer').createObjectCsvWriter;
-const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-const csvFilePath = path.join(__dirname, 'search_log.csv');
-
-const writer = csvWriter({
-  path: csvFilePath,
-  header: [
-    {id: 'searchString', title: 'Search String'},
-    {id: 'dateTime', title: 'Date Time (IST)'},
-    {id: 'ipAddress', title: 'IP Address'},
-    {id: 'userAgent', title: 'Browser'}
-  ],
-  append: true 
-});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
