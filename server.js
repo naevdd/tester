@@ -1,10 +1,10 @@
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
 app.set("view engine", "ejs");
 
@@ -20,21 +20,13 @@ app.get('/exercise-2-redirected',(req,res)=>{
     res.send('Exercise 2 is redirected to this page.');
 });
 
-let searchHistory = [];
+app.get('/exercise-3',(req,res)=>{
+    res.render('./pages/exercise3.ejs');
+})
 
-app.get('/exercise-3', (req, res) => {
-    res.render('./pages/exercise3.ejs', { history: searchHistory });
-});
-
-app.post('/exercise-3', (req, res) => {
-    const query = req.body.string;
-    searchHistory.push(query);
+app.get('/exercise-3/resultpage', (req, res) => {
+    const query = req.query.string;
     res.render('resultpage.ejs', { query });
-});
-
-app.post('/clear-history', (req, res) => {
-    searchHistory = [];
-    res.redirect('/exercise-3');
 });
 
 app.listen(PORT, () => {

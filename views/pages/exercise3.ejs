@@ -1,26 +1,13 @@
 <!doctype html>
 <html>
     <head>
-        <title>exercise-3</title>
+        <title>Exercise 3 - Search String</title>
         <meta charset="utf-8">
     </head>
     <body>
-        <form action="/exercise-3" method="POST">
+        <form action="/exercise-3/resultpage" method="GET">
             <input type="text" placeholder="Search" name="string">
             <button>Submit</button>
-        </form>
-        <h2>Search History</h2>
-        <ul>
-            <% if (history.length > 0) { %>
-                <% history.forEach(function(query) { %>
-                    <li><%= query %></li>
-                <% }) %>
-            <% } else { %>
-                <p>No search history.</p>
-            <% } %>
-        </ul>
-        <form action="/clear-history" method="POST">
-            <button type="submit">Clear History</button>
         </form>
     </body>
 </html>
