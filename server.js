@@ -78,7 +78,7 @@ app.post('/clear-history', (req, res) => {
 app.get('/exercise-4/result4', (req, res) => {
     const searchString = req.query.string;
     const dateTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
-    const ipAddress = req.headers['x-forwarded-for'] || req.ip;
+    const ipAddress = req.ip;
     const userAgent = req.headers['user-agent'];
     const browser = getBrowserName(userAgent);
 
