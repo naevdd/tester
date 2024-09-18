@@ -3,6 +3,16 @@
     <head>
         <title>Search Results 4</title>
         <meta charset="utf-8">
+        <style>
+            body{
+                font-family:monospace;
+                font-size: 30px;
+                text-align: center;
+            }
+            table{
+                margin:auto;
+            }
+        </style>
     </head>
     <body>
         <% if (query) { %>
@@ -25,7 +35,7 @@
                     <% rows.forEach(function(row) { %>
                         <tr>
                             <% row.forEach(function(cell) { %>
-                                <td><%= cell || 'N/A' %></td>
+                                <td><%= cell %></td>
                             <% }) %>
                         </tr>
                     <% }) %>
@@ -34,10 +44,14 @@
     
             <div>
                 <% if (page > 1) { %>
-                    <a href="/exercise-4/result4?page=<%= page - 1 %>">Previous</a>
+                    <form action="/exercise-4/result4?page=<%= page - 1 %>" method="POST">
+                        <button>Previous</button>
+                    </form>
                 <% } %>
                 <% if (page < totalPages) { %>
-                    <a href="/exercise-4/result4?page=<%= page + 1 %>">Next</a>
+                     <form action="/exercise-4/result4?page=<%= page + 1 %>" method="POST">
+                        <button>Next</button>
+                    </form>
                 <% } %>                
             </div>
         <% } else { %>

@@ -75,8 +75,8 @@ app.post('/clear-history', (req, res) => {
     });
 });
 
-app.get('/exercise-4/result4', (req, res) => {
-    const searchString = req.query.string;
+app.post('/exercise-4/result4', (req, res) => {
+    const searchString = req.body.string;
     const dateTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
     const ipAddress = req.ip;
     const userAgent = req.headers['user-agent'];
