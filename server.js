@@ -14,6 +14,26 @@ app.set("view engine", "ejs");
 
 app.set('trust proxy', true);
 
+function isMarkdown(text) {
+    // Simplified and more lenient patterns
+    const markdownPatterns = [
+      /^#+\s*.+/m,        // Headers (allows space after # to be optional)
+      /\*\*.+?\*\*/,      // Bold
+      /\*.+?\*/,          // Italic
+      /\[.+?\]\(.+?\)/,   // Links
+      /^[-*+]\s+.+/m,     // Unordered lists
+      /^\d+\.\s+.+/m,     // Ordered lists
+      /^```[\s\S]*?^```/m,// Code blocks
+      /`.+?`/,            // Inline code
+      /!\[.+?\]\(.+?\)/,  // Images
+      /^>\s*.+/m,         // Blockquotes
+      /^-{3,}$/m,         // Horizontal rules
+      /\|.+\|/            // Tables (basic check)
+    ];
+  
+    return markdownPatterns.some(pattern => pattern.test(text));
+  }
+
 const csvFilePath = path.join(__dirname, 'search_log.csv');
 
 if (!fs.existsSync(csvFilePath)) {
@@ -106,7 +126,40 @@ app.post('/exercise-4/result4', (req, res) => {
     });
 });
 
+app.get('/exercise-5',(req,res)=>{
+    res.render('./pages/exercise5.ejs');
+});
 
+app.get('/exercise-5/post',(req,res)=>{
+    res.render('resultblog5.ejs');
+});
+
+app.post('/exercise-5/submission',(req,res)=>{
+    const text=req.body.bloginput;
+    if(!isMarkdown(text)){
+        res.send("Error: The submitted content is not in markdown.")
+    }
+    else{
+        let date_time = new Date();
+        let date = ("0" + date_time.getDate()).slice(-2);
+        let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+        let year = date_time.getFullYear();
+        let hours = date_time.getHours();
+        let minutes = date_time.getMinutes();
+        let seconds = date_time.getSeconds();
+
+        let filename=year+month+date+hours+minutes+seconds+".md";
+        const fullpath="./markdown/"+filename
+        fs.appendFile(fullpath, text, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.render('./pages/exercise5.ejs');
+            }
+        });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
