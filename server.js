@@ -155,7 +155,7 @@ app.post('/exercise-5/submission',(req,res)=>{
                 console.log(err);
             }
             else {
-                res.render('./pages/exercise5.ejs');
+                res.send("Submitted successfully");
             }
         });
     }
